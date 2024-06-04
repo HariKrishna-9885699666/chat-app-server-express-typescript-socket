@@ -17,7 +17,6 @@ const handleSocketConnection = (socket: Socket, io: Server) => {
   });
 
   socket.on('message', (data: ChatMessage) => {
-    console.log('Received message:', data);
     chatMessages.set(data.id, data);
     broadcastMessage(data, io);
   });
