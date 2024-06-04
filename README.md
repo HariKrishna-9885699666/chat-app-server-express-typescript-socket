@@ -1,7 +1,7 @@
 # Chat Application with Socket.IO and Express
 
 This is a simple chat application using Express, Socket.IO, and TypeScript. 
-The server allows users to join chat rooms, send messages.
+The server allows users to join chat rooms, send messages, and broadcast typing statuses in real-time.
 
 ## Prerequisites
 
