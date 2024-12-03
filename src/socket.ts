@@ -6,24 +6,38 @@ const chatMessages = new Map<string, ChatMessage>();
 
 const connectedClients = new Map<string, Socket>();
 
+const isAllowedRoom = (room: string): boolean => {
+  return room === "hari1209";
+};
+
 const handleSocketConnection = (socket: Socket, io: Server) => {
   console.log('A user connected');
 
   connectedClients.set(socket.id, socket);
 
   socket.on('join', (room: string) => {
-    socket.join(room);
-    console.log(`User joined room: ${room}`);
+    if (isAllowedRoom(room)) {
+      socket.join(room);
+      console.log(`User joined room: ${room}`);
+    } else {
+      console.log(`Access denied for room: ${room}`);
+      socket.disconnect(); // Optionally disconnect unauthorized users
+    }
   });
 
   socket.on('message', (data: ChatMessage) => {
-    chatMessages.set(data.id, data);
-    broadcastMessage(data, io);
+    if (isAllowedRoom(data.room)) {
+      chatMessages.set(data.id, data);
+      broadcastMessage(data, io);
+    } else {
+      console.log(`Message not sent: Unauthorized room ${data.room}`);
+    }
   });
 
   socket.on('typing', (typingStatus: TypingStatus) => {
-    console.log('Typing status:', typingStatus);
-    broadcastTypingStatus(typingStatus, io);
+    if (isAllowedRoom(typingStatus.room)) {
+      broadcastTypingStatus(typingStatus, io);
+    }
   });
 
   socket.on('disconnect', () => {
