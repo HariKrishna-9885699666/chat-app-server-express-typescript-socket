@@ -1,6 +1,22 @@
 import { Server, Socket } from 'socket.io';
 import { ChatMessage, TypingStatus } from './types';
 
+export interface ChatMessage {
+  id: string;
+  text: string;
+  room: string; // Add this property
+  sender: string;
+  timestamp: string;
+  image?: string; // Optional property for image
+}
+
+export interface TypingStatus {
+  room: string; // Add this property
+  user: string;
+  typing: boolean;
+}
+
+
 // Define the Map for chat messages
 const chatMessages = new Map<string, ChatMessage>();
 
