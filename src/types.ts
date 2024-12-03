@@ -1,10 +1,4 @@
-export interface ChatMessage {
-    id: string;
-    text: string;
-    sender: 'me' | 'other';
-    timestamp: string;
-    read: boolean;
-  }
+
   
   export interface ChatRoom {
     id: string;
@@ -12,8 +6,19 @@ export interface ChatMessage {
     messages: ChatMessage[];
   }
   
-  export interface TypingStatus {
-    user: string;
-    isTyping: boolean;
-  }
-  
+
+
+export interface ChatMessage {
+  id: string;
+  text: string;
+  room: string; // Add this property
+  sender: string;
+  timestamp: string;
+  image?: string; // Optional property for image
+}
+
+export interface TypingStatus {
+  room: string; // Add this property
+  user: string;
+  typing: boolean;
+}
